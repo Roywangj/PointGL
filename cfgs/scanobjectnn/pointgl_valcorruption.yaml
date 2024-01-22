@@ -1,0 +1,33 @@
+model:
+  NAME: BaseCls
+  encoder_args:
+    NAME: PointGLEncoder
+    in_channels: 4
+    class_num: 15
+    embed_dim: 64
+    groups: 1
+    res_expansion: 1.0
+    activation: "relu"
+    bias: False
+    use_xyz: False
+    normalize: "anchor"
+    with_relu: False
+    dim_expansion: [2, 2, 2, 2]
+    pre_blocks: [1, 1, 1, 1]
+    radii: [0.1, 0.2, 0.4, 0.8]
+    k_neighbors: [24, 24, 24, 24]
+    reducers: [2, 2, 2, 2]
+  cls_args:
+    NAME: ClsHead
+    num_classes: 15
+    mlps: [ 512, 256 ]
+    norm_args:
+      norm: 'bn1d'
+
+
+mode: scanobjectnnc
+
+datatransforms_scanobjectnn_c:
+  val: [PointsToTensor, PointCloudCenterAndNormalize]
+  kwargs:
+    gravity_dim: 1
